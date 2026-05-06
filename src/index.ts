@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import userRouter from "./routes/userRouter.ts";
 
 dotenv.config();
 
@@ -14,6 +15,9 @@ app.use(express.json());
 // 요청의 본문에서 URL-encoded 데이터를 객체로 변환하여  request.body에 저장
 // URL은 한글을 원래 포함할 수 없기 때문에 변환을 하게 되는데, 그것을 한글로 받아들일 수 있도록 하는 기눙
 app.use(express.urlencoded({extended: true}));
+
+// 프론트엔드가 하는 요청에 대하여 경로 Routing 등록
+app.use("/user", userRouter)
 
 app.listen(8000, () => {
     console.log(`서버 실행됨! http://localhost:${PORT}`);

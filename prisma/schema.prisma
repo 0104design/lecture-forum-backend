@@ -37,7 +37,7 @@ model User {
   createdAt   DateTime   @default(now())        // 삽입 할 때 디본적으로 삽입 시간이 기록
   updatedAt   DateTime   @updatedAt             // 수정 할 때 기본적으로 수정 시간이 기록
   deletedAt   DateTime?       // 타입에 ?를 넣으면 null을 허용한다는 의미
-  userNAme    String     @unique
+  username    String     @unique
   password    String
   name        String
   nickName    String     @unique
