@@ -4,7 +4,7 @@ import { Prisma } from "../generated/prisma/client.ts";
 
 const createUser = async (data: UserCreateInput) => {
     try {
-        return prisma.user.create({
+        return await prisma.user.create({
             data,
         });
     } catch (error) {
@@ -14,7 +14,7 @@ const createUser = async (data: UserCreateInput) => {
             if (error.code === "P2002") {
                 // 중복된 값이 어떤 것인지에 대한 정보는
                 // 이 코드에 들어있는 데 이 코드의 프로퍼티 타입은 string[] | undefined
-                const target = error.meta?.targert as string[];
+                const errorMessage = error.message;
 
                 // 예시
                 // target = ["username", "nickname"];
@@ -22,16 +22,16 @@ const createUser = async (data: UserCreateInput) => {
                 // .find() 와 비슷한 역할이지만,
                 // find는 조건을 걸어서 찾는 메서드이고 (리턴값은 찾은 그 요소)
                 // includes는 단순하게 집어넣은 값과 완벽히 같은 것이 있는 지 true/false로 반환
-                if (target?.includes("username")) {
+                if (errorMessage.includes("username")) {
                     // 상위로 에러를 던지는데
                     // 새로운 자바스트립트 표준 에러 체를 만들어서 던빔
                     // 내용에 "ALREADY_EXISTS_USERNAME"
                     throw new Error("ALREADY_EXISTS_USERNAME");
                 }
-                if (target.includes("email")) {
+                if (errorMessage.includes("email")) {
                     throw new Error("ALREADY_EXISTS_EMAIL");
                 }
-                if (target.includes("nickName")) {
+                if (errorMessage.includes("nickName")) {
                     throw new Error("ALREADY_EXISTS_NICKNAME");
                 }
                 throw new Error("UNKNOWN ERROR");
