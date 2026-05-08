@@ -8,12 +8,12 @@ const hashPassword = async (password: string) => {
 };
 
 // 암호화를 한 값을 검증하는 함수
-const VerifyPassword = async (plainPassword: string, hashedPassword: string) => {
+const verifyPassword = async (plainPassword: string, hashedPassword: string) => {
     // bcrypt.compare(비교할 원래텍스트, 비교할 호황된 텍스트) : 비동기함수, 두 개의 값을 비교해서 boolean 리턴.
     return bcrypt.compare(plainPassword, hashedPassword);
 };
 
 export default {
     hashPassword,
-    VerifyPassword,
+    verifyPassword,
 };
