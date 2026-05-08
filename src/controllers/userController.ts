@@ -69,21 +69,22 @@ const createUser = async (req: Request, res: Response) => {
     }
 };
 
-const login = (req: Request, res: Response) => {
-
+const login = async (req: Request, res: Response) => {
+    try {
     // login이라는 기능은 들어온 비밀번호 값과 데이터베이스에서 조회해 온 값을 비교해야함
     // controller에서 뭔가를 하기 보단
     // DB의 값을 가져오는게 우선되므로
     // 그냥 service로 바로 보냄
     const loginData: LoginInputType = req.body;
 
+    const result = await userService.login(loginData);
 
-    const result = userService.login(loginData);
-
-
-
-
-}
+    res.status(200).json({
+        message: "로그인에 성공했습니다",
+        data: result,
+    });
+    } catch (error) {}
+};
 
 export default {
     createUser,
