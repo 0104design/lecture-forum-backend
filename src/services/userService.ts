@@ -52,36 +52,38 @@ const createUser = async (data: UserCreateInput) => {
 };
 
 const login = async (data: LoginInputType) => {
-    try {
-        // prisma.테이블.findUnique(조건객체) : SELECT명령 (단., unique칼럼을 통해)
-        // .findUnique 라는메서드는 객체 1개만 리턴
-        // find 메서드는 Array 리턴
-        const user = await prisma.user.findUnique({
-            where: {
-                username: data.username,
-            },
-        });
-        // 검색을 했는데 해당 냉용이 없는 건 에러가 아님
-        // DB에서 조회한 내용인 user가 없거나 deletedAt의 값이 이ㅛ다면
-        if (!user || user.deletedAt) {
-            throw new Error("INVALID_CREDENTIALS");
-        }
+    // prisma.테이블.findUnique(조건객체) : SELECT명령 (단., unique칼럼을 통해)
+    // .findUnique 라는메서드는 객체 1개만 리턴
+    // find 메서드는 Array 리턴
+    const user = await prisma.user.findUnique({
+        where: {
+            username: data.username,
+        },
+    });
+    // 검색을 했는데 해당 냉용이 없는 건 에러가 아님
+    // DB에서 조회한 내용인 user가 없거나 deletedAt의 값이 이ㅛ다면
+    if (!user || user.deletedAt) {
+        throw new Error("INVALID_CREDENTIALS");
+    }
 
-        const isValid = await passwordUtil.verifyPassword(data.password, user.password);
-        if (!isValid) {
-            throw new Error("INVALID_CREDENTIALS");
-        }
-        // 아이디와 비밀번호가 일치하는 정보가 있다는 뜻 => 로그인
-        const token = jwtUtil.generateToken(user.id);
+    const isValid = await passwordUtil.verifyPassword(data.password, user.password);
+    if (!isValid) {
+        throw new Error("INVALID_CREDENTIALS");
+    }
+    // 아이디와 비밀번호가 일치하는 정보가 있다는 뜻 => 로그인
+    const token = jwtUtil.generateToken(user.id);
 
-        // password, deletedAt라는 항목은 응답에 포함시킬 필요 없어서 그걸 제외한 나머지만 safeUserInfo 에 저장
-        const { password, deletedAt, ...safeUserInfo } = user;
+    // password, deletedAt라는 항목은 응답에 포함시킬 필요 없어서 그걸 제외한 나머지만 safeUserInfo 에 저장
+    const { password, deletedAt, ...safeUserInfo } = user;
 
-        return {
-            user: safeUserInfo,
-            token,
-        };
-    } catch (error) {}
+    return {
+        user: safeUserInfo,
+        token,
+    };
+
+    //createUser에서는 에러가 나는 부붑ㄴ에 에러객체 Prisma의 Error객체였끼 때문에
+    // service에서는 Jacascript의 객체로 바꿔줄 필요가 있었지만
+    //
 };
 
 export default {

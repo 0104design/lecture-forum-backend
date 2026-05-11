@@ -71,19 +71,29 @@ const createUser = async (req: Request, res: Response) => {
 
 const login = async (req: Request, res: Response) => {
     try {
-    // login이라는 기능은 들어온 비밀번호 값과 데이터베이스에서 조회해 온 값을 비교해야함
-    // controller에서 뭔가를 하기 보단
-    // DB의 값을 가져오는게 우선되므로
-    // 그냥 service로 바로 보냄
-    const loginData: LoginInputType = req.body;
+        // login이라는 기능은 들어온 비밀번호 값과 데이터베이스에서 조회해 온 값을 비교해야함
+        // controller에서 뭔가를 하기 보단
+        // DB의 값을 가져오는게 우선되므로
+        // 그냥 service로 바로 보냄
+        const loginData: LoginInputType = req.body;
 
-    const result = await userService.login(loginData);
+        const result = await userService.login(loginData);
 
-    res.status(200).json({
-        message: "로그인에 성공했습니다",
-        data: result,
-    });
-    } catch (error) {}
+        res.status(200).json({
+            message: "로그인에 성공했습니다",
+            data: result,
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+            if (error.message === "INVALID_CREDENTIALS") {
+                res.status(400).json({ message: "아이디 또는 비밀번호가 일치하지 않습니다." });
+                return;
+            }
+        }
+
+        console.log(error);
+        res.status(500).json({ message: "로그인 처리 중 에러기 발생하였습니다." });
+    }
 };
 
 export default {

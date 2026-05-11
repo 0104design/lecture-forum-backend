@@ -6,7 +6,7 @@ import { Request, Response, NextFunction } from "express";
 export const validate = (schema: ZodType) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         // 실제 검증 처리를 한 코드
-        // .safeParseAsync : (검증 할 데이터) : 내가 작성한 조건에 부합하는 지 확인하는 메서드(비동기 함수)
+        // .safeParseAsync : (검증 당할 데이터) : 내가 작성한 조건에 부합하는 지 확인하는 메서드(비동기 함수)
         const result = await schema.safeParseAsync(req.body);
 
         if (!result.success) {
