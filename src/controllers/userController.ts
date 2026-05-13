@@ -10,7 +10,7 @@ const createUser = async (req: Request, res: Response) => {
 
         // JSON을 객체로 바꿀 때 가능란 건 string, boolean, number, null만 가능
         // 날짜는 JSON.parse() 해도 string임.
-        const { username, password, name, nickName, email, phoneNumber, birthDate, gender, role } =
+        const { username, password, name, nickname, email, phoneNumber, birthdate, gender, role } =
             req.body;
 
         // bcrypt.hash(암호화 할 sting, 암호화 단계숫자) : 비동기 함수, 단방향 암호화 메서드
@@ -18,10 +18,10 @@ const createUser = async (req: Request, res: Response) => {
             username,
             password: await passwordUtil.hashPassword(password),
             name,
-            nickName,
+            nickname,
             email,
             phoneNumber,
-            birthDate: birthDate ? new Date(birthDate) : null,
+            birthdate: birthdate ? new Date(birthdate) : null,
             gender,
             role,
         };

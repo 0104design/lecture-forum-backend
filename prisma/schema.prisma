@@ -40,10 +40,10 @@ model User {
   username    String     @unique
   password    String
   name        String
-  nickName    String     @unique
+  nickname    String     @unique
   email       String     @unique
   phoneNumber String?
-  birthDate   DateTime?
+  birthdate   DateTime?
   gender      GenderType
   role        RoleType   @default(USER)     // 삽입 할 때 기본적으로 USER 기록
 }
