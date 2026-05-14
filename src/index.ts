@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import userRouter from "./routes/userRouter.ts";
+import cors from "cors";
 
 dotenv.config();
 
@@ -9,6 +10,11 @@ const app = express();
 const PORT = process.env.PORT || "8080";
 
 // 기능을 확장 할 떄는 app.use() 라는 메서드 사용
+
+// 데이터 교차 출처 리소스 공유(CORS)를 허용하는 건 백엔드에서 증명하여 해야 함
+// cors() 만 사용하면 모든 프론트엔드 주소에 대해 허용 증명을 하는 것
+/// cors({ origin: 주소 }) 를 하면 특정 주소에 대해서만 허용 증명
+app.use(cors());
 // express.json() : 요청의 본문에서 JSON형태를 객체로 변환하여 request.body에 저장
 app.use(express.json());
 

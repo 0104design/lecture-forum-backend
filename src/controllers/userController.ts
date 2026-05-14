@@ -46,13 +46,13 @@ const createUser = async (req: Request, res: Response) => {
         if (error instanceof Error) {
             switch (error.message) {
                 case "ALREADY_EXISTS_USERNAME":
-                    res.status(409).json({ error: "이미 시용 중인 아이디입니다" });
+                    res.status(409).json({ message: "이미 사용 중인 아이디입니다" });
                     return;
                 case "ALREADY_EXISTS_EMAIL":
-                    res.status(409).json({ error: "이미 가입된 이메일입니다" });
+                    res.status(409).json({ message: "이미 가입된 이메일입니다" });
                     return;
                 case "ALREADY_EXISTS_NICKNAME":
-                    res.status(409).json({ error: "이미 사용 중인 닉네임 입니다" });
+                    res.status(409).json({ message: "이미 사용 중인 닉네임 입니다" });
                     return;
                 default:
                     console.log(error);
