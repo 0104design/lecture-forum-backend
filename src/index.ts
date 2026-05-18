@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import userRouter from "./routes/userRouter.ts";
 import cors from "cors";
+import adminRouter from "./routes/admin/adminRouter.ts";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(express.urlencoded({extended: true}));
 
 // 프론트엔드가 하는 요청에 대하여 경로 Routing 등록
 app.use("/user", userRouter)
+app.use("/admin", adminRouter)
 
 app.listen(8000, () => {
     console.log(`서버 실행됨! http://localhost:${PORT}`);
