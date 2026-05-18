@@ -92,7 +92,7 @@ const login = async (req: Request, res: Response) => {
         }
 
         console.log(error);
-        res.status(500).json({ message: "로그인 처리 중 에러기 발생하였습니다." });
+        res.status(500).json({ message: "로그인 처리 중 에러가 발생하였습니다." });
     }
 };
 

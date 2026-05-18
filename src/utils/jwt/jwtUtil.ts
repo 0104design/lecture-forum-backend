@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-const SECRET_KEY = process.env.SECRET_KEY || "";
+const SECRET_KEY = process.env.JWT_SECRET || "";
 
 export interface DecodedToken extends JwtPayload {
     id: number;
