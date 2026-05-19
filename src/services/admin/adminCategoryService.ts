@@ -20,7 +20,7 @@ const createCategory =  async (input: CategoryCreateInput) => {
         })
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
-            if (error.code === "2002") {
+            if (error.code === "P2002") {
                 throw new Error("ALREADY_EXISTS_CATEGORY_NAME");
             }
         }

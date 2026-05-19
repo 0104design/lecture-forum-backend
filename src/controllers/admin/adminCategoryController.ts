@@ -5,7 +5,7 @@ import {
     AdminCreateCategoryInputType,
 } from "../../schemas/admin/category/createCategory.ts";
 
-const getCategoryList = async (req: Request, res: Response) => {
+const getCategoryList = async (_: Request, res: Response) => {
     try {
         const result = await adminCategoryService.getCategoryList();
 
@@ -39,7 +39,7 @@ const createCategory = async (req: Request, res: Response) => {
             }
         }
         console.log(error);
-        res.status(409).json({ message: "카테고리 생성 중 서버 에러가 발생되었습니다." })
+        res.status(500).json({ message: "카테고리 생성 중 서버 에러가 발생되었습니다." })
     }
 };
 
