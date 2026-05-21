@@ -51,6 +51,19 @@ const createUser = async (data: UserCreateInput) => {
     // await 키워드를 생략할 거랴면, async 뺴면 안 됨/.
 };
 
+const getUserById = async (id: number) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id,
+        },
+    });
+
+    if (!user) {
+        throw new Error("USER_NOT_FOUND");
+    }
+    return user;
+};
+
 const login = async (data: LoginInputType) => {
     // prisma.테이블.findUnique(조건객체) : SELECT명령 (단., unique칼럼을 통해)
     // .findUnique 라는메서드는 객체 1개만 리턴
@@ -88,5 +101,7 @@ const login = async (data: LoginInputType) => {
 
 export default {
     createUser,
+    getUserById,
     login,
+
 };
